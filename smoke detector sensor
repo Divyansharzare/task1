@@ -1,33 +1,25 @@
-Smart Air Quality Monitor
+// C++ code
+//
+int gassensor = 0;
 
-This repository contains the Arduino code for a simple Smart Air Quality Monitor using a gas sensor. The project aims to detect and indicate the presence of harmful gases in the environment, such as carbon monoxide (CO), by monitoring the analog output of the gas sensor.
+void setup()
+{
+  pinMode(A0, INPUT);
+  Serial.begin(9600);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+}
 
-Features:
-
-Reads analog data from the gas sensor connected to pin A0.
-Monitors the gas concentration and triggers LED indicators accordingly.
-LED indicators (connected to pins 3 and 4) turn on when the gas concentration exceeds a predefined threshold, indicating potential danger.
-Serial communication is used to display real-time gas sensor readings on the Arduino Serial Monitor.
-Hardware Components:
-
-Arduino board (tested on Arduino Uno)
-Gas sensor module
-LEDs (for visualization)
-Jumper wires
-Breadboard (optional)
-Usage:
-
-Connect the gas sensor module to the Arduino board.
-Connect LEDs to pins 3 and 4 of the Arduino for visual feedback.
-Upload the provided Arduino code to the board.
-Open the Arduino Serial Monitor to view real-time gas sensor readings.
-Note:
-
-Adjust the gas concentration threshold (currently set to 343) in the code according to the specific requirements and characteristics of the gas sensor being used.
-Ensure proper calibration of the gas sensor for accurate readings.
-This project is intended for educational purposes and serves as a basic example of air quality monitoring using Arduino.
-Author:
-[Your Name/Username]
-
-License:
-This project is licensed under the MIT License.
+void loop()
+{
+  gassensor = analogRead(A0);
+  Serial.println(gassensor);
+  if (gassensor >= 343) {
+    digitalWrite(3, HIGH);
+    digitalWrite(4, HIGH);
+  } else {
+    digitalWrite(3, LOW);
+    digitalWrite(4, LOW);
+  }
+  delay(10); // Delay a little bit to improve simulation performance
+}
